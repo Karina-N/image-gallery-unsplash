@@ -12,20 +12,34 @@ const api = createApi({
 
 function App() {
   const [imagesList, setImagesList] = useState(null);
+  const [imagesPerPage, setImagesPerPage] = useState(30);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     api.photos
-      .list()
+      .list({ perPage: imagesPerPage, page: currentPage })
       .then((res) => setImagesList(res.response.results))
       .catch(() => console.log("something went wrong"));
-  }, []);
+  }, [currentPage]);
+
+  const updateCurrentPageNumber = (num) => {
+    setCurrentPage(num);
+  };
 
   return (
     <div className="App">
       <h3>Image gallery</h3>
       <Routes>
-        {/* <Route path="/">{imagesList ? <ImageGallery imagesList={imagesList} /> : "loading"}</Route> */}
-        <Route path="/" element={<ImageGallery imagesList={imagesList} />} />
+        <Route
+          path="/"
+          element={
+            <ImageGallery
+              imagesList={imagesList}
+              updateCurrentPageNumber={updateCurrentPageNumber}
+              currentPage={currentPage}
+            />
+          }
+        />
         <Route path="/photos/:photoId" element={<ImageDetails api={api} />} />
       </Routes>
     </div>

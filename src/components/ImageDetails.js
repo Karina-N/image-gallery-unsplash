@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import moment from "moment/moment";
 
 export default function ImageDetails(props) {
@@ -10,7 +11,6 @@ export default function ImageDetails(props) {
     props.api.photos
       .get({ photoId })
       .then((singleImage) => {
-        console.log(singleImage.response);
         setImageDetails(singleImage.response);
       })
       .catch(() => console.log("error getting single image details"));
@@ -22,6 +22,7 @@ export default function ImageDetails(props) {
 
   return (
     <>
+      <Link to="/">Home</Link>
       {imageDetails && (
         <div>
           <img src={imageDetails.urls.small} alt={imageDetails.description} />
