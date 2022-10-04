@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { createApi } from "unsplash-js";
+import { useEffect, useState } from "react";
+import "./App.css";
+import ImageGallery from "./components/ImageGallery";
+
+const api = createApi({
+  accessKey: process.env.REACT_APP_ACCESS_KEY,
+});
 
 function App() {
+  const [imagesList, setImagesList] = useState(null);
+
+  useEffect(() => {
+    api.photos
+      .list()
+      .then((res) => {
+        console.log(res);
+        setImagesList(res.response.results);
+      })
+      .catch(() => console.log("something went wrong"));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Homepage</h2>
+      {imagesList ? <ImageGallery imagesList={imagesList} /> : "loading"}
     </div>
   );
 }
