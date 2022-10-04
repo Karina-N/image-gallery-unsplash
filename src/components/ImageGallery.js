@@ -4,9 +4,9 @@ export default function ImageGallery(props) {
   return (
     <div>
       this is image gallery
-      {props.imagesList.map((image) => {
+      {props.imagesList?.map((image) => {
         return (
-          <Link key={image.id} to="#">
+          <Link key={image.id} to={"/photos/" + image.id}>
             <img src={image.urls.thumb} alt="" />
           </Link>
         );
