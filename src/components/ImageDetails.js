@@ -6,7 +6,7 @@ import moment from "moment/moment";
 export default function ImageDetails(props) {
   const { photoId } = useParams();
   const [imageDetails, setImageDetails] = useState(null);
-
+  
   useEffect(() => {
     props.api.photos
       .get({ photoId })
@@ -46,6 +46,7 @@ export default function ImageDetails(props) {
           </p>
           <p>Published {timeSincePublished()}</p>
           <p>{imageDetails.exif.name}</p>
+          <p>{imageDetails.likes} likes </p>
         </div>
       )}
     </>

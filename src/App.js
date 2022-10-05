@@ -14,17 +14,19 @@ function App() {
   const [imagesList, setImagesList] = useState(null);
   const [imagesPerPage, setImagesPerPage] = useState(30);
   const [currentPage, setCurrentPage] = useState(1);
+  const [orderBy, setOrderBy] = useState("latest");
 
   useEffect(() => {
     api.photos
-      .list({ perPage: imagesPerPage, page: currentPage })
-      .then((res) => setImagesList(res.response.results))
+      .list({ perPage: imagesPerPage, page: currentPage, orderBy: orderBy })
+      .then((res) => {
+        setImagesList(res.response.results);
+      })
       .catch(() => console.log("something went wrong"));
-  }, [currentPage]);
+  }, [currentPage, orderBy]);
 
-  const updateCurrentPageNumber = (num) => {
-    setCurrentPage(num);
-  };
+  const updateCurrentPageNumber = (num) => setCurrentPage(num);
+  const updateSorting = (sortCriteria) => setOrderBy(sortCriteria);
 
   return (
     <div className="App">
@@ -37,6 +39,8 @@ function App() {
               imagesList={imagesList}
               updateCurrentPageNumber={updateCurrentPageNumber}
               currentPage={currentPage}
+              orderBy={orderBy}
+              updateSorting={updateSorting}
             />
           }
         />
