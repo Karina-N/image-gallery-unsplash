@@ -6,7 +6,7 @@ import moment from "moment/moment";
 export default function ImageDetails(props) {
   const { photoId } = useParams();
   const [imageDetails, setImageDetails] = useState(null);
-  
+
   useEffect(() => {
     props.api.photos
       .get({ photoId })
@@ -22,14 +22,16 @@ export default function ImageDetails(props) {
 
   return (
     <>
-      <Link to="/">Home</Link>
+      <Link to="/" className="button home-button">
+        Home
+      </Link>
       {imageDetails && (
-        <div>
-          <img src={imageDetails.urls.small} alt={imageDetails.description} />
+        <div className="single-image-div">
+          <img className="single-image" src={imageDetails.urls.regular} alt={imageDetails.description} />
           <p>
             Photo by
             <span>
-              <a href={imageDetails.user.portfolio_url} target="_blank" rel="noreferrer">
+              <a href={imageDetails.user.links.html} target="_blank" rel="noreferrer">
                 {imageDetails.user.name}
               </a>
             </span>
@@ -45,7 +47,7 @@ export default function ImageDetails(props) {
             </span>
           </p>
           <p>Published {timeSincePublished()}</p>
-          <p>{imageDetails.exif.name}</p>
+          <p>Camera used: {imageDetails.exif.name}</p>
           <p>{imageDetails.likes} likes </p>
         </div>
       )}

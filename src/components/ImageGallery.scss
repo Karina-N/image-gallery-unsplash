@@ -1,0 +1,79 @@
+@import "../mixins.scss";
+
+.sort-by-div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.button {
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.home-button {
+  text-decoration: none;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.sort-by-div select:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.image-gallery {
+  padding: 40px;
+  display: grid;
+  justify-content: center;
+  width: 90vw;
+  gap: 20px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include large-desktop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.single-image,
+.single-image a,
+.single-image a img {
+  border-radius: 14px;
+}
+
+.single-image a {
+  font-size: 0px;
+}
+
+.single-image a img {
+  height: auto;
+  width: 100%;
+}
+
+.single-image:hover {
+  overflow: hidden;
+}
+
+.single-image a img:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+.pagination-buttons span {
+  margin: 0 10px;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.single-image-div span {
+  margin: 0 8px;
+}
