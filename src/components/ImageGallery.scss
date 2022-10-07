@@ -46,13 +46,8 @@
   }
 }
 
-.single-image,
-.single-image a,
-.single-image a img {
-  border-radius: 14px;
-}
-
 .single-image {
+  border-radius: 14px;
   a {
     font-size: 0px;
 
@@ -60,6 +55,7 @@
       height: auto;
       width: 100%;
       display: block;
+      border-radius: 14px;
     }
     img:hover {
       transform: scale(1.1);
@@ -88,4 +84,8 @@
   .single-image {
     max-width: 90vw;
   }
+}
+
+.spinner {
+  margin: 80px;
 }

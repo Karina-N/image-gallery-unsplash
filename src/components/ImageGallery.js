@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./ImageGallery.scss";
+import BeatLoader from "react-spinners/BeatLoader";
 
 export default function ImageGallery(props) {
   const [imagesList, setImagesList] = useState(null);
-  const [imagesPerPage, setImagesPerPage] = useState(30);
+  const [imagesPerPage, setImagesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderBy, setOrderBy] = useState("latest");
   const [sortingInput, setSortingInput] = useState(props.orderBy);
@@ -15,7 +16,7 @@ export default function ImageGallery(props) {
       .then((res) => {
         setImagesList(res.response.results);
       })
-      .catch(() => console.log("something went wrong"));
+      .catch((err) => console.log("something went wrong getting images ", err));
   }, [currentPage, orderBy]);
 
   const handleSortSelection = (e) => {
@@ -31,6 +32,18 @@ export default function ImageGallery(props) {
     }
   };
 
+  const renderImagesGallery = () => {
+    return imagesList.map((image) => {
+      return (
+        <div className="single-image" key={image.id}>
+          <Link to={"/photos/" + image.id}>
+            <img src={image.urls.small} alt={image.description} />
+          </Link>
+        </div>
+      );
+    });
+  };
+
   return (
     <>
       <div className="sort-by-div">
@@ -42,17 +55,11 @@ export default function ImageGallery(props) {
         </select>
       </div>
 
-      <div className="image-gallery">
-        {imagesList?.map((image) => {
-          return (
-            <div className="single-image" key={image.id}>
-              <Link to={"/photos/" + image.id}>
-                <img src={image.urls.small} alt={image.description} />
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+      {imagesList ? (
+        <div className="image-gallery">{renderImagesGallery()}</div>
+      ) : (
+        <BeatLoader className="spinner" color="black" />
+      )}
 
       <div className="pagination-buttons">
         <button className="button" onClick={() => goToNextPage(-1)}>
