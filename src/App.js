@@ -1,4 +1,6 @@
 import { createApi } from "unsplash-js";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.scss";
@@ -8,6 +10,8 @@ import ImageDetails from "./components/ImageDetails";
 const api = createApi({
   accessKey: process.env.REACT_APP_ACCESS_KEY,
 });
+
+TimeAgo.addDefaultLocale(en);
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import moment from "moment/moment";
+import ReactTimeAgo from "react-time-ago";
 
 export default function ImageDetails(props) {
   const { photoId } = useParams();
@@ -15,10 +15,6 @@ export default function ImageDetails(props) {
       })
       .catch(() => console.log("error getting single image details"));
   }, []);
-
-  const timeSincePublished = (imageDetails) => {
-    return moment(imageDetails?.created_at).fromNow();
-  };
 
   return (
     <>
@@ -46,7 +42,12 @@ export default function ImageDetails(props) {
               </a>
             </span>
           </p>
-          <p>Published {timeSincePublished()}</p>
+          <p>
+            Published:
+            <span>
+              <ReactTimeAgo date={Date.parse(imageDetails.created_at)} locale="en-US" timeStyle="round-minute" />
+            </span>
+          </p>
           <p>Camera used: {imageDetails.exif.name}</p>
           <p>{imageDetails.likes} likes </p>
         </div>
