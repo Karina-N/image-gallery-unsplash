@@ -20,7 +20,7 @@
 }
 
 .sort-by-div {
-  select:focus {
+  select:focus { 
     box-shadow: none;
     outline: none;
   }
@@ -30,7 +30,7 @@
   padding: 40px;
   display: grid;
   justify-content: center;
-  width: 90vw;
+  width: 86vw;
   gap: 20px;
 
   @include tablet {

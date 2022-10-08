@@ -27,9 +27,10 @@ export default function ImageGallery(props) {
   const goToNextPage = (difference) => {
     if (currentPage === 1 && difference === -1) {
       setCurrentPage(1);
-    } else if (currentPage >= 1) {
+    } else {
       setCurrentPage(currentPage + difference);
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const renderImagesGallery = () => {

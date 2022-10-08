@@ -30,11 +30,7 @@ export default function ImageDetails(props) {
           </span>
           on
           <span>
-            <a
-              href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://unsplash.com" target="_blank" rel="noreferrer">
               Unsplash
             </a>
           </span>
