@@ -3,6 +3,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import { Routes, Route } from "react-router-dom";
 
+import "./normalize.scss";
 import "./App.scss";
 import ImageGallery from "./components/ImageGallery";
 import ImageDetails from "./components/ImageDetails";
