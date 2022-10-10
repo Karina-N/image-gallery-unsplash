@@ -19,7 +19,7 @@ export default function ImageGallery(props) {
       .list({ perPage: imagesPerPage, page: props.currentPage, orderBy: props.orderBy })
       .then((res) => {
         if (res.type === "error") {
-          throw new Error();
+          throw new Error(); // ensure all failing requests are catched ("unsplash-js" does not always throws an error)
         }
         setImagesList(res.response.results);
       })
@@ -33,7 +33,7 @@ export default function ImageGallery(props) {
 
   const handleSortSelection = (e) => {
     props.setOrderBy(e.target.value);
-    props.setCurrentPage(1);
+    props.setCurrentPage(1); // after sorting, reset state to return to page1 of the list
   };
 
   const goToNextPage = (difference) => {
