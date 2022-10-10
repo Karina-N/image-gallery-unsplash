@@ -7,15 +7,31 @@ import BeatLoader from "react-spinners/BeatLoader";
 export default function ImageDetails(props) {
   const { photoId } = useParams();
   const [imageDetails, setImageDetails] = useState(null);
+  const [retryCounter, setRetryCounter] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
+    getSingleImageDetails();
+  }, [retryCounter]);
+
+  const getSingleImageDetails = () => {
+    setErrorMessage(null);
     props.api.photos
       .get({ photoId })
       .then((singleImage) => {
+        if (singleImage.type === "error") {
+          throw new Error(); // ensure all failing requests are catched ("unsplash-js" does not always throws an error)
+        }
+
         setImageDetails(singleImage.response);
       })
-      .catch(() => console.log("error getting single image details"));
-  }, []);
+      .catch(() => {
+        setErrorMessage("Sorry, we can't find what you are looking for...");
+        if (retryCounter <= 3) {
+          setRetryCounter((prevCounter) => prevCounter + 1);
+        }
+      });
+  };
 
   const renderImageDetails = () => {
     return (
@@ -46,12 +62,22 @@ export default function ImageDetails(props) {
     );
   };
 
+  const renderContent = () => {
+    if (errorMessage) {
+      return <p className="error-message">{errorMessage}</p>;
+    } else if (imageDetails) {
+      return <div className="image-gallery">{renderImageDetails()}</div>;
+    } else {
+      return <BeatLoader className="spinner" color="black" />;
+    }
+  };
+
   return (
     <>
       <Link to="/" className="button home-button">
         Home
       </Link>
-      {imageDetails ? renderImageDetails() : <BeatLoader className="spinner" color="black" />}
+      {renderContent()}
     </>
   );
 }

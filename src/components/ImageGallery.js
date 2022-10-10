@@ -9,16 +9,30 @@ export default function ImageGallery(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [orderBy, setOrderBy] = useState("latest");
   const [sortingInput, setSortingInput] = useState(props.orderBy);
+  const [retryCounter, setRetryCounter] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
+    getImagesList();
+  }, [currentPage, orderBy]);
+
+  const getImagesList = () => {
+    setErrorMessage(null);
     props.api.photos
       .list({ perPage: imagesPerPage, page: currentPage, orderBy: orderBy })
       .then((res) => {
+        if (res.type === "error") {
+          throw new Error();
+        }
         setImagesList(res.response.results);
       })
-      .catch((err) => console.log("something went wrong getting images ", err));
-  }, [currentPage, orderBy]);
-
+      .catch(() => {
+        setErrorMessage("Sorry, we can't find what you are looking for... ");
+        if (retryCounter <= 3) {
+          setRetryCounter((prevCounter) => prevCounter + 1);
+        }
+      });
+  };
   const handleSortSelection = (e) => {
     setSortingInput(e.target.value);
     setOrderBy(e.target.value);
@@ -45,6 +59,16 @@ export default function ImageGallery(props) {
     });
   };
 
+  const renderContent = () => {
+    if (errorMessage) {
+      return <p className="error-message">{errorMessage}</p>;
+    } else if (imagesList) {
+      return <div className="image-gallery">{renderImagesGallery()}</div>;
+    } else {
+      return <BeatLoader className="spinner" color="black" />;
+    }
+  };
+
   return (
     <>
       <div className="sort-by-div">
@@ -56,11 +80,7 @@ export default function ImageGallery(props) {
         </select>
       </div>
 
-      {imagesList ? (
-        <div className="image-gallery">{renderImagesGallery()}</div>
-      ) : (
-        <BeatLoader className="spinner" color="black" />
-      )}
+      <div className="main-content">{renderContent()}</div>
 
       <div className="pagination-buttons">
         <button className="button" onClick={() => goToNextPage(-1)}>

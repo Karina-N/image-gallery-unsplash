@@ -6,6 +6,9 @@
   gap: 10px;
 }
 
+.main-content {
+  min-height: 500px;
+}
 .button {
   padding: 6px 12px;
   border-radius: 7px;
@@ -20,7 +23,7 @@
 }
 
 .sort-by-div {
-  select:focus { 
+  select:focus {
     box-shadow: none;
     outline: none;
   }
@@ -82,10 +85,16 @@
   }
 
   .single-image {
-    max-width: 90vw;
+    max-height: 80vh;
   }
 }
 
 .spinner {
   margin: 80px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 40px;
 }
