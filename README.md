@@ -17,8 +17,18 @@ https://github.com/Karina-N/image-gallery-unsplash.git
 npm install
 ```
 
-4. Create .env file and save the ACCESS_KEY as env variable:
+4. Create .env file and save the ACCESS_KEY and BASE_URL as env variable:
 
 ```
-REACT_APP_ACCESS_KEY=paste_your_unique_api_access_key_here
+REACT_APP_ACCESS_KEY=your_unique_api_access_key_here ---> replace with your own key
+
+REACT_APP_BASE_URL=https://api.unsplash.com/photos
+```
+
+5. Restart server after saving environment variables ;)
+
+6. Run the app
+
+```
+npm start
 ```
