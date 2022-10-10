@@ -80,12 +80,23 @@
 }
 
 .single-image-div {
+  display: flex;
+  flex-direction: column;
+
+  .single-image {
+    max-width: 90vw;
+
+    @include tablet {
+      max-height: 70vh;
+    }
+  }
+
   span {
     margin: 0 8px;
   }
 
-  .single-image {
-    max-height: 80vh;
+  .single-image-description {
+    align-items: left;
   }
 }
 
