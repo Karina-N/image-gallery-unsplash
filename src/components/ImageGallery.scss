@@ -85,12 +85,15 @@
 
   .single-image {
     max-width: 90vw;
+    margin-bottom: 20px;
 
     @include tablet {
       max-height: 70vh;
     }
   }
-
+  p {
+    margin: 0 0 14px 0;
+  }
   span {
     margin: 0 8px;
   }

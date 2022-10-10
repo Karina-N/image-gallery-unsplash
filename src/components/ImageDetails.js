@@ -74,7 +74,7 @@ export default function ImageDetails(props) {
     if (errorMessage) {
       return <p className="error-message">{errorMessage}</p>;
     } else if (imageDetails) {
-      return <div className="image-gallery">{renderImageDetails()}</div>;
+      return <div>{renderImageDetails()}</div>;
     } else {
       return <BeatLoader className="spinner" color="black" />;
     }

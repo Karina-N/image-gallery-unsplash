@@ -5,21 +5,18 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 export default function ImageGallery(props) {
   const [imagesList, setImagesList] = useState(null);
-  const [imagesPerPage, setImagesPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [orderBy, setOrderBy] = useState("latest");
-  const [sortingInput, setSortingInput] = useState(props.orderBy);
+  const [imagesPerPage, setImagesPerPage] = useState(12);
   const [retryCounter, setRetryCounter] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     getImagesList();
-  }, [currentPage, orderBy]);
+  }, [props.currentPage, props.orderBy]);
 
   const getImagesList = () => {
     setErrorMessage(null);
     props.api.photos
-      .list({ perPage: imagesPerPage, page: currentPage, orderBy: orderBy })
+      .list({ perPage: imagesPerPage, page: props.currentPage, orderBy: props.orderBy })
       .then((res) => {
         if (res.type === "error") {
           throw new Error();
@@ -33,16 +30,17 @@ export default function ImageGallery(props) {
         }
       });
   };
+
   const handleSortSelection = (e) => {
-    setSortingInput(e.target.value);
-    setOrderBy(e.target.value);
+    props.setOrderBy(e.target.value);
+    props.setCurrentPage(1);
   };
 
   const goToNextPage = (difference) => {
-    if (currentPage === 1 && difference === -1) {
-      setCurrentPage(1);
+    if (props.currentPage === 1 && difference === -1) {
+      props.setCurrentPage(1);
     } else {
-      setCurrentPage(currentPage + difference);
+      props.setCurrentPage(props.currentPage + difference);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -73,7 +71,7 @@ export default function ImageGallery(props) {
     <>
       <div className="sort-by-div">
         <h3>Sort by</h3>
-        <select className="button" value={sortingInput} onChange={(e) => handleSortSelection(e)}>
+        <select className="button" value={props.orderBy} onChange={(e) => handleSortSelection(e)}>
           <option value="latest">Latest</option>
           <option value="oldest">Oldest</option>
           <option value="popular">Popular</option>
@@ -86,7 +84,7 @@ export default function ImageGallery(props) {
         <button className="button" onClick={() => goToNextPage(-1)}>
           previous
         </button>
-        <span> {currentPage} </span>
+        <span> {props.currentPage} </span>
         <button className="button" onClick={() => goToNextPage(1)}>
           next
         </button>
