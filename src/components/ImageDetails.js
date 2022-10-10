@@ -40,13 +40,21 @@ export default function ImageDetails(props) {
         <p>
           Photo by
           <span>
-            <a href={imageDetails.user.links.html} target="_blank" rel="noreferrer">
+            <a
+              href={imageDetails.user.links.html + "?utm_source=zedge_image_gallery&utm_medium=referral"}
+              target="_blank"
+              rel="noreferrer"
+            >
               {imageDetails.user.name}
             </a>
           </span>
           on
           <span>
-            <a href="https://unsplash.com" target="_blank" rel="noreferrer">
+            <a
+              href="https://unsplash.com?utm_source=zedge_image_gallery&utm_medium=referral"
+              target="_blank"
+              rel="noreferrer"
+            >
               Unsplash
             </a>
           </span>
